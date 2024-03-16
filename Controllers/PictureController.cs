@@ -52,6 +52,11 @@ namespace WebApplication1.Controllers
 				pic.picturePath = imagePath;
                 _context.Picture.Add(pic);
                 _context.SaveChanges();
+
+				int insertedId = pic.idPicture;
+				picture.categories.ForEach(c => 
+				_context.CategoryPicture.Add(new CategoryPicture { idCategory = c, idPicture = insertedId }));
+				_context.SaveChanges();
                 return Ok(picture);
             }
             catch (Exception ex)
@@ -62,9 +67,9 @@ namespace WebApplication1.Controllers
 			
 		}
 
-		[HttpPost("picture")]
+		[HttpGet("picture")]
 
-		public IActionResult getPicture(int id)
+		public IActionResult getPicture([FromQuery] int id)
 		{
 			try
 			{
@@ -80,6 +85,22 @@ namespace WebApplication1.Controllers
 				return BadRequest(e);
 			}
 		}
+
+		[HttpGet("pictures")]
+		public IActionResult getAllPicturesWithRandomOrdered()
+		{
+            try
+			{
+                List<Picture> pictures = _context.Picture.ToList();
+                return Ok(pictures);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }
+
+
 
 		[HttpPost("description-auto")]
 		public async Task<string> generateDescription([FromBody] PictureDTO pictureDTO)

@@ -8,6 +8,7 @@
 		public int idUser { get; set; }
 		public string description { get; set; }
 		public int views { get; set; }
+		public List<int> categories { get; set; }
 
 		public Picture toPicture()
 		{
