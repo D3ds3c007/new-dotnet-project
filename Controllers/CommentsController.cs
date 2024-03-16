@@ -60,6 +60,7 @@ namespace WebApplication1.Controllers
                 return StatusCode(500, $"Internal server error: {ex}");
             }
         }
+        
 
 
     }

@@ -22,21 +22,36 @@ namespace WebApplication1.Controllers // Assurez-vous de remplacer "WebApplicati
             _context = context;
         }
         // GET: api/Picture/{id}
-       [HttpGet("/{id}")]
+       [HttpGet("picture/{id}")]
         public IActionResult GetImageById(int id)
         {
             try
             {
                 // Find the image with the specified id
-                var image = _context.Picture.FirstOrDefault(p => p.idPicture == id);
+                var image = _context.Picture
+                    .Include(p => p.categoryPictures)
+                        .ThenInclude(cp => cp.category) // Inclure les données des catégories associées
+                    .Include(p => p.likes) // Inclure les likes associés
+                        .ThenInclude(l => l.user) // Inclure les données de l'utilisateur associé à chaque like
+                    .Include(p => p.comments) // Inclure les commentaires associés
+                        .ThenInclude(c => c.User) // Inclure les données de l'utilisateur associé à chaque commentaire
+                    .FirstOrDefault(p => p.idPicture == id);
                 
                 if (image == null)
                 {
                     return NotFound(); // Retourne une réponse 404 si aucune image n'est trouvée avec l'ID spécifié
                 }
                 
-                return Ok(image); // Retourne les détails de l'image
-            }
+                var options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve
+                };
+
+                // Sérialiser les images en JSON en utilisant les options spécifiées
+                var jsonResult = JsonSerializer.Serialize(image, options);
+
+                // Retourner le résultat JSON
+                return Ok(jsonResult);            }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex}");
