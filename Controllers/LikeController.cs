@@ -18,7 +18,7 @@ namespace WebApplication1.Controllers // Assurez-vous de remplacer "WebApplicati
         {
             _context = context;
         }
-        // GET: api/Like/like/{id}
+        // GET: api/Like/image/{id}
         [HttpGet("/image/{id}")]
         public IActionResult GetLikeOf(int id)
         {
