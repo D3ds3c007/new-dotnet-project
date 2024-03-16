@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using WebApplication1.Models; 
-using WebApplication1.Data;// Assurez-vous de remplacer "WebApplication1" par le nom de votre espace de noms
+using WebApplication1.Data;
+using WebApplication1.Models.DTO;// Assurez-vous de remplacer "WebApplication1" par le nom de votre espace de noms
 
 namespace WebApplication1.Controllers // Assurez-vous de remplacer "WebApplication1" par le nom de votre espace de noms
 {
@@ -20,10 +21,11 @@ namespace WebApplication1.Controllers // Assurez-vous de remplacer "WebApplicati
 
         // PUT: api/User/bio
         [HttpPut("bio")]
-        public IActionResult UpdateBio([FromBody] User model)
+        public IActionResult UpdateBio([FromBody] UserBioDTO modelDTO)
         {
             try
             {
+                var model = modelDTO.GetUser();
                 var user = _context.Users.FirstOrDefault(u => u.idUser == model.idUser);
                 if (user == null)
                 {
@@ -43,10 +45,11 @@ namespace WebApplication1.Controllers // Assurez-vous de remplacer "WebApplicati
 
         // PUT: api/User/photo
         [HttpPut("photo")]
-        public IActionResult UpdatePhoto([FromBody] User model)
+        public IActionResult UpdatePhoto([FromBody] UserPdpPathDTO modelDTO)
         {
             try
             {
+                User model = modelDTO.GetUser();
                 var user = _context.Users.FirstOrDefault(u => u.idUser == model.idUser);
                 if (user == null)
                 {

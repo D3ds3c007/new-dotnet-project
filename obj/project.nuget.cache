@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "+gjBicNuDboTMYpq3IwQalbdWw6OxLMiA4uSQoYKraZ5PHAEXskHJizQCAizREQuslQPsqLa36hQEM+NcS5DeA==",
+  "dgSpecHash": "jrQBDuWysKTmk10RgQwObzUxWz1BJTYG0jT89RHU8dT9z1GB+QDgokT7rgv6SSqtESNJJwZoPY2yEoATc41JIg==",
   "success": true,
   "projectFilePath": "E:\\save\\s6\\hackaton\\hackaton\\new-dotnet-project\\WebApplication1.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ITU\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\ITU\\.nuget\\packages\\castle.core\\5.1.0\\castle.core.5.1.0.nupkg.sha512",
     "C:\\Users\\ITU\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\ITU\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

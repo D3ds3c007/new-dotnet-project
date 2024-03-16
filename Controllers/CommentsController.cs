@@ -18,10 +18,11 @@ namespace WebApplication1.Controllers
 
         // POST: api/Comments
         [HttpPost]
-        public IActionResult CreateComments([FromBody] Comments comments)
+        public IActionResult CreateComments([FromBody] CommentsDTO commentsDTO)
         {
             try
             {
+                Comments comments = commentsDTO.GetComments();
                 if (comments == null)
                 {
                     return BadRequest("Comments object is null");

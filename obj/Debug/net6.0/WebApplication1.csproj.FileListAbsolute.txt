@@ -824,3 +824,4 @@ E:\save\s6\hackaton\hackaton\new-dotnet-project\obj\Debug\net6.0\scopedcss\bundl
 E:\save\s6\hackaton\hackaton\new-dotnet-project\obj\Debug\net6.0\WebApplication1.csproj.CopyComplete
 E:\save\s6\hackaton\hackaton\new-dotnet-project\obj\Debug\net6.0\WebApplication1.genruntimeconfig.cache
 E:\save\s6\hackaton\hackaton\new-dotnet-project\obj\Debug\net6.0\ref\WebApplication1.dll
+E:\save\s6\hackaton\hackaton\new-dotnet-project\bin\Debug\net6.0\AutoMapper.dll
