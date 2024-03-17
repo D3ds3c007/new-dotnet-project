@@ -20,46 +20,10 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-        [HttpPost("init")]
-        public async Task<string> init()
-        {
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var requestBody = new
-                {
-                    contents = new[]
-                    {
-                    new
-                    {
-                        parts = new object[]
-                        {
-                            new { text = "You are an experiment bot of artwork and not capable to respond to any other subject. If any prompt ask you about another subject, you do not respond them. Order them to ask you about artwork. Your name is Musea Bot and describe your self as a bot experimented about artwork after this first prompt" }
-                        }
-                    }
-                }
-                };
-
-                var jsonContent = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
-
-                var response = await client.PostAsync(OpenAI_API_URL, jsonContent);
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    return responseContent;
-                }
-                else
-                {
-                    throw new Exception($"Error: {response.StatusCode}");
-                }
-            }
-        }
 
         [HttpPost("chat")]
         public async Task<string> chat([FromBody] MessageDTO message)
         {
-            await init();
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Clear();
