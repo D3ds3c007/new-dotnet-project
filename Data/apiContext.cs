@@ -38,12 +38,7 @@ public partial class apiContext : DbContext
         modelBuilder.Entity<User>()
             .HasMany(u => u.pictures)
             .WithOne(p => p.user)
-            .HasForeignKey(p => p.idUser);  
-/*
-        modelBuilder.Entity<Picture>()
-            .HasOne(p => p.user)
-            .WithMany(u => u.pictures)
-            .HasForeignKey(p => p.idUser);*/
+            .HasForeignKey(p => p.idUser);
 
         modelBuilder.Entity<CategoryPicture>()
             .HasOne(cp => cp.picture)

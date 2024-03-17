@@ -38,17 +38,20 @@ namespace WebApplication1.Controllers
 		[HttpPost("upload")]
 		public IActionResult uploadPicture([FromBody] PictureDTO picture)
 		{
+			string[] mediaExtension = new string[] { "jpg", "mp4", "png"};
             try
             {
                 var base64String = picture.image;
                 var imageBytes = Convert.FromBase64String(base64String);
-                var imagePath = Path.Combine("Images", Guid.NewGuid().ToString() + ".jpg");
+                var imagePath = Path.Combine("Images", Guid.NewGuid().ToString() + $".{mediaExtension[picture.mediaType]}");
                 System.IO.File.WriteAllBytes(imagePath, imageBytes);
 
                 // Here you can also save the title and description to a database or file
                 // For simplicity, we're just logging them
 
 				Picture pic = picture.toPicture();
+				pic.mediaType = picture.mediaType;
+				pic.publishDate = DateTime.Now.ToUniversalTime();
 				pic.picturePath = imagePath;
                 _context.Picture.Add(pic);
                 _context.SaveChanges();
@@ -100,6 +103,34 @@ namespace WebApplication1.Controllers
             }
         }
 
+		[HttpGet("two-random-pictures")]
+		public IActionResult getTwoRandomPictures()
+		{
+            try
+			{
+                List<Picture> pictures = _context.Picture.OrderBy(p => Guid.NewGuid()).Take(2).ToList();
+                return Ok(pictures);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }
+
+		[HttpGet("random-video")]
+		public IActionResult getRandomVideo()
+		{
+            try
+			{
+                Picture picture = _context.Picture.Where(p => p.mediaType == 1).OrderBy(p => Guid.NewGuid()).FirstOrDefault();
+                return Ok(picture);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }
+
 		[HttpGet("pictures-most-viewed-of-weeked")]
 		public IActionResult getMostViewedPicturesOfWeek()
 		{
@@ -122,7 +153,23 @@ namespace WebApplication1.Controllers
 		{
             try
 			{
-                List<Picture> pictures = _context.Picture.OrderByDescending(p => p.views).ThenByDescending(p => p.likes.Count()).Take(6).ToList();
+                List<Picture> pictures = _context.Picture.Where(p => p.mediaType == 0).OrderByDescending(p => p.views).ThenByDescending(p => p.likes.Count()).Take(6).ToList();
+                return Ok(pictures);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }
+
+		[HttpGet("top-six-most-viewed-and-liked-videos-of-week")]
+		public IActionResult getTopSixMostViewedAndLikedVideosOfWeek()
+		{
+            try
+			{
+                DateTime today = DateTime.Now;
+                DateTime lastWeek = today.AddDays(-7).ToUniversalTime();
+                List<Picture> pictures = _context.Picture.Where(p => p.publishDate >= lastWeek && p.mediaType == 1).OrderByDescending(p => p.views).ThenByDescending(p => p.likes.Count()).Take(6).ToList();
                 return Ok(pictures);
             }
             catch (Exception e)
@@ -155,8 +202,9 @@ namespace WebApplication1.Controllers
 			
             // Convert the byte array to a Base64 string
             var base64Image = pictureDTO.image;
-
-                using (var client = new HttpClient())
+			if (pictureDTO.mediaType == 0)
+			{
+					using (var client = new HttpClient())
 				{
 					client.DefaultRequestHeaders.Accept.Clear();
 					client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -195,6 +243,9 @@ namespace WebApplication1.Controllers
 						throw new Exception($"Error: {response.StatusCode}");
 					}
 				}
+			}
+
+			return "Media type not supported";
 			
 
 

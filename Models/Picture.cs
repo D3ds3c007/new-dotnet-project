@@ -14,6 +14,8 @@ namespace WebApplication1.Models
 		public int idUser { get; set; }
 		public string description { get; set; }
 		public int views { get; set; }
+
+		public int mediaType { get; set; }
 		public DateTime publishDate { get; set; }
 
 		public virtual ICollection<CategoryPicture> categoryPictures { get; set; }
