@@ -6,6 +6,7 @@ namespace WebApplication1.Models.DTO
 	{
 		[Key]
 		public int idUser { get; set; }
+		public string image { get; set; }
 		public string pdpPath { get; set; }
 		public User GetUser()
 		{

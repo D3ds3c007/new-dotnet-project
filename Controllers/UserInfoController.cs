@@ -49,6 +49,12 @@ namespace WebApplication1.Controllers // Assurez-vous de remplacer "WebApplicati
         {
             try
             {
+
+                var base64String = modelDTO.image;
+                var imageBytes = Convert.FromBase64String(base64String);
+                var imagePath = Path.Combine("Images/pdp", Guid.NewGuid().ToString() + ".jpg");
+                System.IO.File.WriteAllBytes(imagePath, imageBytes);
+
                 User model = modelDTO.GetUser();
                 var user = _context.Users.FirstOrDefault(u => u.idUser == model.idUser);
                 if (user == null)
@@ -56,7 +62,7 @@ namespace WebApplication1.Controllers // Assurez-vous de remplacer "WebApplicati
                     return NotFound("User not found");
                 }
 
-                user.pdpPath = model.pdpPath;
+                user.pdpPath = imagePath;
                 _context.SaveChanges();
 
                 return Ok("Photo updated successfully");
