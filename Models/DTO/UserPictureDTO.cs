@@ -2,19 +2,18 @@
 
 namespace WebApplication1.Models.DTO
 {
-	public class LikeDTO
+	public class UserPdpPathDTO
 	{
 		[Key]
 		public int idUser { get; set; }
-		public int idPicture { get; set; }
-		public Like GetLike()
+		public string pdpPath { get; set; }
+		public User GetUser()
 		{
-			return new Like
+			return new User
 			{
 				idUser = this.idUser,
-				idPicture = this.idPicture
+				pdpPath = this.pdpPath
 			};
 		}
 	}
-
 }
