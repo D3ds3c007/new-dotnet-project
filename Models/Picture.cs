@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NuGet.Packaging.Signing;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using WebApplication1.Models.DTO;
 
@@ -13,6 +14,7 @@ namespace WebApplication1.Models
 		public int idUser { get; set; }
 		public string description { get; set; }
 		public int views { get; set; }
+		public DateTime publishDate { get; set; }
 
 		[JsonIgnore]
 		public virtual ICollection<CategoryPicture> categoryPictures { get; set; }
