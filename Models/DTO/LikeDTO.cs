@@ -1,8 +1,20 @@
-﻿namespace WebApplication1.Models.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApplication1.Models.DTO
 {
-    public class LikeDTO : Like
+    public class LikeDTO
     {
-          public UserDTO user { get; set; }
-  
+        [Key]
+        public int idUser { get; set; }
+        public int idPicture { get; set; }
+        public Like GetLike()
+        {
+            return new Like
+            {
+                idUser = this.idUser,
+                idPicture = this.idPicture
+            };
+        }
     }
+
 }
