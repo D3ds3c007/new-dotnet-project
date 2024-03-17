@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using WebApplication1.Models.DTO;
 
 namespace WebApplication1.Models
 {
@@ -19,5 +20,7 @@ namespace WebApplication1.Models
 		public virtual ICollection<Comments> comments { get; set; }
         [JsonIgnore]
         public virtual User user { get; set; }
+
+	
     }
 }
