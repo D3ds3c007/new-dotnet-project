@@ -7,7 +7,8 @@ namespace WebApplication1.Models
 	{
 		[Key]
 		public int idPicture { get; set; }
-		public string picturePath { get; set; }
+        public string title { get; set; }
+        public string picturePath { get; set; }
 		public int idUser { get; set; }
 		public string description { get; set; }
 		public int views { get; set; }
