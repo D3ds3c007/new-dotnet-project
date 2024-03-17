@@ -103,6 +103,50 @@ namespace WebApplication1.Controllers
             }
         }
 
+		[HttpPut("{id}/edit-artwork")]
+		public IActionResult updateDescription([FromBody] PictureDTO pictureDTO, [FromRoute] int id)
+		{
+            try
+			{
+                Picture picture = _context.Picture.Find(id);
+			
+                if (picture == null)
+				{
+                    return NotFound();
+                }
+                Picture updatedPicture = pictureDTO.toPicture();
+				picture.title = updatedPicture.title;
+				picture.description = updatedPicture.description;
+			
+                _context.SaveChanges();
+                return Ok(updatedPicture);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }
+
+		[HttpPut("{id}/increment-views")]
+		public IActionResult incrementViews([FromRoute] int id)
+		{
+            try
+			{
+                Picture picture = _context.Picture.Find(id);
+                if (picture == null)
+				{
+                    return NotFound();
+                }
+                picture.views++;
+                _context.SaveChanges();
+                return Ok(picture);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }	
+
 		[HttpGet("two-random-pictures")]
 		public IActionResult getTwoRandomPictures()
 		{
