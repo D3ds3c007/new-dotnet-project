@@ -8,7 +8,10 @@
     ".NETCoreApp,Version=v6.0": {
       "WebApplication1/1.0.0": {
         "dependencies": {
+<<<<<<< HEAD
           "AutoMapper": "13.0.1",
+=======
+>>>>>>> origin/Dev
           "Microsoft.EntityFrameworkCore.Design": "7.0.11",
           "Microsoft.EntityFrameworkCore.InMemory": "7.0.11",
           "Microsoft.EntityFrameworkCore.Proxies": "7.0.11",
@@ -23,6 +26,7 @@
           "WebApplication1.dll": {}
         }
       },
+<<<<<<< HEAD
       "AutoMapper/13.0.1": {
         "dependencies": {
           "Microsoft.Extensions.Options": "7.0.0"
@@ -34,6 +38,8 @@
           }
         }
       },
+=======
+>>>>>>> origin/Dev
       "Castle.Core/5.1.0": {
         "dependencies": {
           "System.Diagnostics.EventLog": "6.0.0"
@@ -2382,6 +2388,7 @@
       "serviceable": false,
       "sha512": ""
     },
+<<<<<<< HEAD
     "AutoMapper/13.0.1": {
       "type": "package",
       "serviceable": true,
@@ -2389,6 +2396,8 @@
       "path": "automapper/13.0.1",
       "hashPath": "automapper.13.0.1.nupkg.sha512"
     },
+=======
+>>>>>>> origin/Dev
     "Castle.Core/5.1.0": {
       "type": "package",
       "serviceable": true,
