@@ -218,7 +218,7 @@ namespace WebApplication1.Controllers
 					{
 						parts = new object[]
 						{
-							new { text = "Genereate a short description text of this work of art" },
+							new { text = "Generate a short description text of this work of art" },
 							new
 							{
 								inline_data = new
