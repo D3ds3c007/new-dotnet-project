@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using WebApplication1.Models.DTO;
 
 namespace WebApplication1.Models
@@ -13,8 +13,8 @@ namespace WebApplication1.Models
 
 		[JsonIgnore]
 		public virtual Picture picture { get; set; }
-		[JsonIgnore]
-		public virtual User user { get; set; }
+        public virtual User user { get; set; }
+
 
 	
 	}

@@ -27,6 +27,12 @@ public partial class apiContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+              .Ignore(u => u.likes);
+
+        modelBuilder.Entity<Like>()
+              .Ignore(l => l.picture);
+
         OnModelCreatingPartial(modelBuilder);
         modelBuilder.Entity<User>()
             .HasMany(u => u.pictures)
