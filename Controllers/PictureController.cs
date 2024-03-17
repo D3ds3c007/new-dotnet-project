@@ -21,20 +21,6 @@ namespace WebApplication1.Controllers
 			_context = context;
 		}
 
-		[HttpGet("categories")]
-		public IActionResult getCategories()
-		{
-			try
-			{
-				List<Category> categories = _context.Category.ToList();
-				categories.ForEach(c => c.categoryPictures = null);
-				return Ok(categories);
-			}
-			catch (Exception e)
-			{
-				return BadRequest(e);
-			}
-		}
 		[HttpPost("upload")]
 		public IActionResult uploadPicture([FromBody] PictureDTO picture)
 		{
