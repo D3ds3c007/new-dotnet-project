@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebApplication1.Models
 {
@@ -10,7 +11,7 @@ namespace WebApplication1.Models
 		public int idPicture { get; set; }
 		public string comment { get; set; }
 
-
+		[JsonIgnore]
 		public virtual Picture picture { get; set; }
 		public virtual User User { get; set; }
 	}

@@ -30,8 +30,9 @@ public partial class apiContext : DbContext
         modelBuilder.Entity<User>()
               .Ignore(u => u.likes);
 
-        modelBuilder.Entity<Like>()
-              .Ignore(l => l.picture);
+        modelBuilder.Entity<User>()
+              .Ignore(u => u.comments);
+
 
         OnModelCreatingPartial(modelBuilder);
         modelBuilder.Entity<User>()

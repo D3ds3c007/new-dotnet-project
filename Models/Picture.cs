@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using WebApplication1.Models.DTO;
-using Newtonsoft.Json;
 
 namespace WebApplication1.Models
 {
