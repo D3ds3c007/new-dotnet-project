@@ -252,5 +252,68 @@ namespace WebApplication1.Controllers
 
 
 		}
-	}
+
+		[HttpPost("artwork-detector")]
+        public async Task<IActionResult> ArtworkVerification([FromBody] PictureDTO pictureDTO)
+        {
+
+
+
+            // Convert the byte array to a Base64 string
+            var base64Image = pictureDTO.image;
+            if (pictureDTO.mediaType == 0)
+            {
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var requestBody = new
+                    {
+                        contents = new[]
+                        {
+                    new
+                    {
+                        parts = new object[]
+                        {
+                            new { text = $"Classify the following picture between 0-100 score.\r\nOptions : - Artwork {{score}} \r\n         - Not artwork {{score}}\r\n\r\nRestriction : - Do not repond with long text. Respond only with the options above\r\n \r\nInstruction : The image is not people image\r\n\r\n\r\nPicture : " },
+                            new
+                            {
+                                inline_data = new
+                                {
+                                    mime_type = "image/jpeg",
+                                    data = base64Image
+                                }
+                            }
+                        }
+                    }
+                }
+                    };
+
+                    var jsonContent = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+
+                    var response = await client.PostAsync(OpenAI_API_URL, jsonContent);
+                    if (response.IsSuccessStatusCode)
+                    {
+						string responseContent = await response.Content.ReadAsStringAsync();
+						Console.WriteLine(responseContent);
+						if(responseContent.Contains("Not artwork"))
+						{
+							return BadRequest(new {Status = false , message = "This is not an artwork"});
+						}
+                        return Ok(new {Status = true , message= "This is a valid artwork"});
+                    }
+                    else
+                    {
+                        throw new Exception($"Error: {response.StatusCode}");
+                    }
+
+                }
+            }
+			return BadRequest();
+
+
+
+
+        }
+    }
 }
