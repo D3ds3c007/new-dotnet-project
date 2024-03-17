@@ -117,6 +117,20 @@ namespace WebApplication1.Controllers
             }
         }
 
+		[HttpGet("top-six-most-viewed-and-liked-pictures")]
+		public IActionResult getTopSixMostViewedAndLikedPictures()
+		{
+            try
+			{
+                List<Picture> pictures = _context.Picture.OrderByDescending(p => p.views).ThenByDescending(p => p.likes.Count()).Take(6).ToList();
+                return Ok(pictures);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }	
+
 
 
 		[HttpPost("description-auto")]
