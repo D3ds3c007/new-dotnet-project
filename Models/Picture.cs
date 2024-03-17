@@ -16,7 +16,6 @@ namespace WebApplication1.Models
 		public int views { get; set; }
 		public DateTime publishDate { get; set; }
 
-		[JsonIgnore]
 		public virtual ICollection<CategoryPicture> categoryPictures { get; set; }
 		public virtual ICollection<Like> likes { get; set; }
 		public virtual ICollection<Comments> comments { get; set; }

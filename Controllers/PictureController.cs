@@ -9,7 +9,7 @@ using WebApplication1.Models.DTO;
 namespace WebApplication1.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("api/[controller]")]
 	public class PictureController : ControllerBase
 	{
 		private const string OpenAI_API_KEY = "AIzaSyD8oyXDTqxHjgrf0UnWGWOkKC4eqgFYWbM"; // Replace with your actual OpenAI API key
@@ -93,6 +93,51 @@ namespace WebApplication1.Controllers
 			{
                 List<Picture> pictures = _context.Picture.ToList();
                 return Ok(pictures);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }
+
+		[HttpGet("pictures-most-viewed-of-weeked")]
+		public IActionResult getMostViewedPicturesOfWeek()
+		{
+            try
+			{
+                DateTime today = DateTime.Now;
+                DateTime lastWeek = today.AddDays(-7).ToUniversalTime();
+                List<Picture> pictures = _context.Picture.Where(p => p.publishDate >= lastWeek).OrderByDescending(p => p.views).ToList();
+				Console.WriteLine(pictures.Count);
+                return Ok(pictures);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }
+
+		[HttpGet("top-six-most-viewed-and-liked-pictures")]
+		public IActionResult getTopSixMostViewedAndLikedPictures()
+		{
+            try
+			{
+                List<Picture> pictures = _context.Picture.OrderByDescending(p => p.views).ThenByDescending(p => p.likes.Count()).Take(6).ToList();
+                return Ok(pictures);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }
+
+		[HttpGet("{id}/total-view-of-artwork-of-users")]
+		public IActionResult getTotalViewOfArtworkOfUser([FromRoute] int id)
+		{
+            try
+			{
+                int totalViews = _context.Picture.Where(p => p.idUser == id).Sum(p => p.views);
+                return Ok(totalViews);
             }
             catch (Exception e)
 			{
