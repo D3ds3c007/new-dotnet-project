@@ -108,7 +108,8 @@ namespace WebApplication1.Controllers
 		{
             try
 			{
-                List<Picture> pictures = _context.Picture.OrderBy(p => Guid.NewGuid()).Take(2).ToList();
+				var images = _context.Picture.Where(p => p.mediaType == 0).ToList();
+                List<Picture> pictures = images.OrderBy(p => Guid.NewGuid()).Take(2).ToList();
                 return Ok(pictures);
             }
             catch (Exception e)
@@ -122,7 +123,9 @@ namespace WebApplication1.Controllers
 		{
             try
 			{
-                Picture picture = _context.Picture.Where(p => p.mediaType == 1).OrderBy(p => Guid.NewGuid()).FirstOrDefault();
+				var videos = _context.Picture.Where(p => p.mediaType == 1).ToList();
+                Picture picture = videos.OrderBy(p => Guid.NewGuid()).FirstOrDefault();
+				Console.WriteLine("Hello" + picture);
                 return Ok(picture);
             }
             catch (Exception e)
@@ -139,7 +142,6 @@ namespace WebApplication1.Controllers
                 DateTime today = DateTime.Now;
                 DateTime lastWeek = today.AddDays(-7).ToUniversalTime();
                 List<Picture> pictures = _context.Picture.Where(p => p.publishDate >= lastWeek).OrderByDescending(p => p.views).ToList();
-				Console.WriteLine(pictures.Count);
                 return Ok(pictures);
             }
             catch (Exception e)
