@@ -100,6 +100,23 @@ namespace WebApplication1.Controllers
             }
         }
 
+		[HttpGet("pictures-most-viewed-of-weeked")]
+		public IActionResult getMostViewedPicturesOfWeek()
+		{
+            try
+			{
+                DateTime today = DateTime.Now;
+                DateTime lastWeek = today.AddDays(-7).ToUniversalTime();
+                List<Picture> pictures = _context.Picture.Where(p => p.publishDate >= lastWeek).OrderByDescending(p => p.views).ToList();
+				Console.WriteLine(pictures.Count);
+                return Ok(pictures);
+            }
+            catch (Exception e)
+			{
+                return BadRequest(e);
+            }
+        }
+
 
 
 		[HttpPost("description-auto")]
